@@ -1,0 +1,53 @@
+
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "",
+    "Metadata": {
+
+    },
+    "Parameters": {
+    
+    },
+    "Mappings": {
+
+    },
+    "Conditions": {
+
+    },
+    "Resources": {
+"S3Bucket": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "AccessControl": "Private"
+      }
+    },
+
+"EC2Instance": {
+    "Type": "AWS::EC2::Instance",
+    "Properties": {
+        "KeyName": "recoverykey",
+        "ImageId": "ami-a58d0dc5",
+        "InstanceType": "t2.micro",
+        "Monitoring": "false",
+        "SecurityGroupIds" : ["sg-e8f4d190"],
+         "UserData": {
+            "Fn::Base64": {
+              "Fn::Join": [
+                "\n",
+                [
+                  "#!/bin/bash",
+                  "sudo apt-get install python-software-properties",
+                  "curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -",
+									"sudo apt-get install nodejs"
+                ]
+              ]
+            }
+          }
+}
+        }
+    },
+    "Outputs": {
+
+    }
+}
+    
